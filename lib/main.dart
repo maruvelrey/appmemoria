@@ -27,14 +27,12 @@ class PantallaMemoria extends StatefulWidget {
 }
 
 class _PantallaMemoriaState extends State<PantallaMemoria> {
-  // Cambiamos emojis por letras/palabras sencillas
   final List<String> _simbolos = ['X', 'Y', 'Z', 'K', 'M', 'E'];
 
   late List<String> _cartas;
   late List<bool> _volteadas;
   late List<bool> _emparejadas;
 
-  // Guardamos los índices de hasta 3 cartas seleccionadas
   List<int> _seleccionadas = [];
   int _intentos = 0;
   bool _bloqueado = false;
@@ -46,7 +44,6 @@ class _PantallaMemoriaState extends State<PantallaMemoria> {
   }
 
   void _iniciarJuego() {
-    // 3 cartas de cada símbolo (en total 18 cartas)
     _cartas = [..._simbolos, ..._simbolos, ..._simbolos];
     _cartas.shuffle(Random());
 
@@ -65,14 +62,12 @@ class _PantallaMemoriaState extends State<PantallaMemoria> {
       _seleccionadas.add(indice);
     });
 
-    // Si ya elegimos 3 cartas, validamos
     if (_seleccionadas.length == 3) {
       _intentos++;
       final i1 = _seleccionadas[0];
       final i2 = _seleccionadas[1];
       final i3 = _seleccionadas[2];
 
-      // Validación: comprobar si las 3 tienen la misma letra/palabra
       if (_cartas[i1] == _cartas[i2] && _cartas[i2] == _cartas[i3]) {
         setState(() {
           _emparejadas[i1] = true;
@@ -82,7 +77,6 @@ class _PantallaMemoriaState extends State<PantallaMemoria> {
         });
         _revisarVictoria();
       } else {
-        // No coinciden: se ocultan tras un breve tiempo
         _bloqueado = true;
         Future.delayed(const Duration(milliseconds: 800), () {
           setState(() {
@@ -138,7 +132,7 @@ class _PantallaMemoriaState extends State<PantallaMemoria> {
         child: GridView.builder(
           itemCount: _cartas.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // 3 columnas x 6 filas = 18 cartas perfectamente ordenadas
+            crossAxisCount: 3, 
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
@@ -151,7 +145,7 @@ class _PantallaMemoriaState extends State<PantallaMemoria> {
                 decoration: BoxDecoration(
                   color: mostrar
                       ? (_emparejadas[indice] ? Colors.green[200] : Colors.white)
-                      : Colors.pink[300], // Fondo rosado
+                      : Colors.pink[300], 
                   borderRadius: BorderRadius.circular(12),
                 ),
                 alignment: Alignment.center,
